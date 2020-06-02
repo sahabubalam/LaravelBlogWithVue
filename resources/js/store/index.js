@@ -2,6 +2,9 @@ export default{
     state:{
         category:[],
         post:[],
+        blogpost:[],
+        singlepost:[],
+        allcategories:[],
     },
     getters:{
         getCategory(state)
@@ -11,6 +14,18 @@ export default{
         getAllPost(state)
         {
             return state.post
+        },
+        getblogPost(state)
+        {
+            return state.blogpost
+        },
+        singlepost(state)
+        {
+            return state.singlepost
+        },
+        allcategories(state)
+        {
+            return state.allcategories
         }
     },
     actions:{
@@ -30,6 +45,28 @@ export default{
                 console.log(response.data)
                 context.commit('allpost',response.data.posts)
             })
+        },
+        getblogPost(context)
+        {
+            axios.get('/blogpost')
+            .then((response)=>{
+                console.log(response.data)
+                context.commit('getblogPost',response.data.posts)
+            })
+        },
+        getpostById(context,payload)
+        {
+            axios.get('/singleblogpost/'+payload)
+            .then((response)=>{
+                context.commit('singlePost',response.data.post)
+            })
+        },
+        allcategories(context)
+        {
+            axios.get('/categories')
+            .then((response)=>{
+                context.commit('AllCategories',response.data.categories)
+            })
         }
     },
     mutations:{
@@ -40,6 +77,18 @@ export default{
         allpost(state,payload)
         {
             return state.post=payload
+        },
+        getblogPost(state,payload)
+        {
+            return state.blogpost=payload
+        },
+        singlePost(state,payload)
+        {
+            return state.singlepost=payload
+        },
+        AllCategories(state,payload)
+        {
+            return state.allcategories=payload
         }
     }
 }

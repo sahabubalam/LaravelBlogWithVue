@@ -1,0 +1,36 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Model\Category\category;
+use App\Model\Post\post;
+use App\Model\User;
+
+class BlogController extends Controller
+{
+    //
+    public function ALlBlogPost()
+    {
+        $post=post::with('user','category')->get();
+        return response()->json([
+            'posts'=>$post
+        ], 200);
+    }
+    public function SingleBlogPost($id)
+    {
+        $post=post::with('user','category')->where('id',$id)->first();
+        return response()->json([
+            'post'=>$post
+        ], 200);
+    }
+
+    public function AllCategories()
+    {
+        $categories=Category::all();
+        return response()->json([
+            'categories'=>$categories
+        ], 200);
+
+    }
+}

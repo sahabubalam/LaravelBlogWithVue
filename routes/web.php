@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('frontend/home');
 });
 
 Auth::routes();
@@ -41,3 +41,9 @@ Route::get('/category','Admin\Category\CategoryController@AllCategory');
 Route::get('/category/{id}','Admin\Category\CategoryController@DeleteCategory');
 Route::get('/editcategory/{id}','Admin\Category\CategoryController@EditCategory');
 Route::post('/update-category/{id}','Admin\Category\CategoryController@UpdateCategory');
+
+//frontend
+
+Route::get('/blogpost',"BlogController@AllBlogPost");
+Route::get('/singleblogpost/{id}',"BlogController@SingleBlogPost");
+Route::get('/categories',"BlogController@AllCategories");
