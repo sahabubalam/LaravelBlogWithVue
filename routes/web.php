@@ -47,3 +47,7 @@ Route::post('/update-category/{id}','Admin\Category\CategoryController@UpdateCat
 Route::get('/blogpost',"BlogController@AllBlogPost");
 Route::get('/singleblogpost/{id}',"BlogController@SingleBlogPost");
 Route::get('/categories',"BlogController@AllCategories");
+Route::get('/categoriespost/{id}',"BlogController@AllCategoriesById");
+
+Route::get('/search',"BlogController@SearchPost");
+

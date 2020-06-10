@@ -4,14 +4,14 @@
             <aside class="right-sidebar">
               <div class="widget">
                 <form class="form-search">
-                  <input placeholder="Type something" type="text" class="input-medium search-query">
-                  <button type="submit" class="btn btn-square btn-theme">Search</button>
+                  <input @keyup="RealSearch " placeholder="Type something" type="text" v-model="keyword"  class="input-medium search-query">
+                  <button type="submit" @click.prevent="RealSearch" class="btn btn-square btn-theme">Search</button>
                 </form>
               </div>
               <div class="widget">
                 <h5 class="widgetheading">Categories</h5>
                 <ul class="cat">
-                  <li v-for="category in allcategories"><i class="icon-angle-right"></i><a href="#">{{category.category_name}}</a><span> (20)</span></li>
+                  <li v-for="category in allcategories"><i class="icon-angle-right"></i><router-link :to="`/categories/${category.id}`">{{category.category_name}}</router-link><span> (20)</span></li>
                  
                 </ul>
               </div>
@@ -20,7 +20,7 @@
                 <ul class="recent">
                   <li v-for="(post,index) in blogpost">
                     <img :src="`uploadimage/${post.image}`" class="pull-left" alt="" style="height:90px;width:75px" />
-                    <h6><a href="#">{{post.title}}</a></h6>
+                    <h6><router-link :to="`/blog/${post.id}`">{{post.title}}</router-link></h6>
                     <p>
                      {{post.description |shortlenght(70,"......")}}
                     </p>
@@ -44,8 +44,15 @@
     </span>
 </template>
 <script>
+import _ from 'lodash'
     export default{
         name:"New",
+        data()
+        {
+          return{
+            keyword:''
+          }
+        },
         computed:
         {
            allcategories()
@@ -59,8 +66,25 @@
         },
         mounted()
         {
+             this.$store.dispatch("getblogPost")
              this.$store.dispatch("allcategories")
+        },
+        methods:
+        {
+          
+          RealSearch:_.debounce(function(){
+            this.$store.dispatch("searchpost",this.keyword)
+          },1000)
+        },
+        watch:
+        {
+          $route(to,from)
+          {
+             this.RealSearch();
+          }
+          
         }
+        
     }
 </script>  
 <style scoped>

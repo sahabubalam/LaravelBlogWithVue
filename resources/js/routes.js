@@ -58,6 +58,11 @@ export const routes=[
      {
       path : '/blog/:id',
       component : SingleBlogPost
+     },
+
+     {
+      path : '/categories/:id',
+      component : Blogpost
      }
      
 

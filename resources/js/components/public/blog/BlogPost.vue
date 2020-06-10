@@ -6,14 +6,14 @@
           <div class="span4">
          
             <div class="inner-heading">
-              <h2>Blog left sidebar</h2>
+              <h2>Blog left sidebar {{this.$route.params.id}}</h2>
             </div>
           </div>
           <div class="span8">
             <ul class="breadcrumb">
               <li><a href="#"><i class="icon-home"></i></a><i class="icon-angle-right"></i></li>
               <li><a href="#">Blog</a><i class="icon-angle-right"></i></li>
-              <li class="active">Blog with left sidebar</li>
+              <li class="active">Blog with left sidebar </li>
             </ul>
           </div>
         </div>
@@ -23,6 +23,9 @@
       <div class="container">
         <div class="row">
           <div class="span8">
+
+
+
 
 
 
@@ -46,7 +49,7 @@
                       <li><i class="icon-folder-open"></i><a href="#"> {{post.category.category_name}}</a></li>
                       <li><i class="icon-comments"></i><a href="#">4 Comments</a></li>
                     </ul>
-                    <router-link :to="`blog/${post.id}`" class="pull-right">Continue reading <i class="icon-angle-right"></i></router-link>
+                    <router-link :to="`/blog/${post.id}`" class="pull-right">Continue reading <i class="icon-angle-right"></i></router-link>
                   </div>
                 </div>
               </div>
@@ -95,7 +98,24 @@ import BlogSidebar from "./BlogSidebar.vue"
     },
     methods:
     {
-
+        getAllCategoryPost()
+        {
+            if(this.$route.params.id!=null)
+            {
+                this.$store.dispatch('getPostByCatId',this.$route.params.id)
+            } 
+            else
+            {
+                this.$store.dispatch('getblogPost')
+            }   
+        }
+    },
+    watch:
+    {
+        $route(to,from)
+        {
+            this.getAllCategoryPost();
+        }
     }
 }
 </script>  
